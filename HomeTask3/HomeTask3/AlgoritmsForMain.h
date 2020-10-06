@@ -118,6 +118,7 @@ void existElementsInArray()
 		binarySearch(array, length, arrayOfIntegers[i]);
 	}
 
+	free(array);
 }
 
 //task3
