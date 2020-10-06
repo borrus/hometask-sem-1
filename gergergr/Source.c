@@ -141,6 +141,8 @@ void sortArrayOfTenElements()
 		array[minI] = temp;
 	}
 	printArray(array, length);
+
+	free(array);
 }
 
 int main()
