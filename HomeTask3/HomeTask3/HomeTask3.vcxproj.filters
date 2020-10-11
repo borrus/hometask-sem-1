@@ -15,18 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlgoritmsForMain.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="Main.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="AlgoritmsForMain.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClCompile Include="tests.c">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tests.h">
+    <ClInclude Include="AlgoritmsForMain.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Header.h">
+    <ClInclude Include="tests.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
