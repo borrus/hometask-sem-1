@@ -11,9 +11,10 @@ void printArray(int* array, int const length)
 }
 
 // task1
-void insertionSort(int* array, int length);
 
-void qsortRecursive(int* array, int length)
+void insertionSort(int* array, const int length);
+
+void qsortRecursive(int* array, int const length)
 {
 	if (length < 10)
 	{
@@ -22,7 +23,7 @@ void qsortRecursive(int* array, int length)
 	int i = 0;
 	int j = length - 1;
 	int mid = array[length / 2];
-	do {
+	do  {
 		while (array[i] < mid)
 		{
 			++i;
@@ -40,7 +41,7 @@ void qsortRecursive(int* array, int length)
 			++i;
 			--j;
 		}
-	}while (i <= j);
+	} while (i <= j);
 
 	if (j > 0) 
 	{
@@ -52,14 +53,12 @@ void qsortRecursive(int* array, int length)
 	}
 }
 
-void insertionSort(int* array, int length)
+void insertionSort(int* array, int const length)
 {
-	int temp = 0;
-	int location = 0;
 	for (int i = 1; i < length; ++i)
 	{
-		temp = array[i];
-		location = i - 1;
+		int temp = array[i];
+		int location = i - 1;
 		while (location >= 0 && array[location] > temp)
 		{
 			array[location + 1] = array[location];
@@ -68,7 +67,6 @@ void insertionSort(int* array, int length)
 		array[location + 1] = temp;
 	}
 }
-
 
 //task2
 
@@ -96,26 +94,23 @@ bool binarySearch(int const* array, int length, int const elementToFind)
 	return false;
 }
 
-
 void existElementsInArray()
 {
 	int length = 0;
 	int lengthOfIntegers = 0;
+	printf("provide length of origin array");
 	scanf_s("%d", &length);
+	printf("provide number of integer numbers");
 	scanf_s("%d", &lengthOfIntegers);
 	int* array = (int*)malloc(length * sizeof(int)) ;
 	for (int i = 0; i < length; ++i)
 	{
 		array[i] = rand() % 1000;
 	}
-	int* arrayOfIntegers = (int*)malloc(length * sizeof(int));
 	for (int i = 0; i < lengthOfIntegers; ++i)
 	{
-		arrayOfIntegers[i] = rand() % 1000;
-	}
-	for (int  i = 0; i < lengthOfIntegers; ++i)
-	{
-		binarySearch(array, length, arrayOfIntegers[i]);
+		int currentInteger = rand() % 1000;
+		binarySearch(array, length, currentInteger);
 	}
 
 	free(array);
@@ -130,7 +125,7 @@ int theMostCommonArrayElement(int* array, int const length)
 	int max = -1;
 	int number = 0;
 	int currentNumber = 0;
-	for (int i = 0; i < length; ++i)
+	for (int i = 0; i < length - 1; ++i)
 	{
 		if (array[i] == array[i + 1])
 		{
