@@ -3,9 +3,10 @@
 #include <string.h>
 #include <locale.h>
 #include "algoritms.h"
+
 int main()
 {
-	allTests();
+	printf("%d", doubleConvert(-5));
 
 	return 0;
 }

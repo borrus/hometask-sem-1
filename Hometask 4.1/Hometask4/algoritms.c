@@ -3,12 +3,9 @@
 
 bool* doubleConvert(int number)
 {
-	bool* array = (bool*)malloc(sizeof(int) * 8);
-	for (int i = 31; i >= 0; --i)
-	{
-		array[i] = 0;
-	}
-	int digit = 31;
+	const int size = sizeof(int) * 8;
+	bool* array = (bool*)calloc(size);
+	int digit = size - 1;
 	while (number != 0)
 	{
 		array[digit] = number % 2;
@@ -19,13 +16,13 @@ bool* doubleConvert(int number)
 	return array;
 }
 
-bool* doubleSumm(bool* array1, bool* array2)
+bool* doubleSum(bool* array1, bool* array2)
 {
 	int length = sizeof(int) * 8;
-	bool* arrayOfSumm = (bool*)malloc(length);
+	bool* arrayOfSum = (bool*)malloc(length);
 	for (int i = 0; i < length; ++i)
 	{
-		arrayOfSumm[i] = 0;
+		arrayOfSum[i] = 0;
 	}
 	int one = 0;
 	for (int i = length - 1; i >= 0; --i)
@@ -33,24 +30,24 @@ bool* doubleSumm(bool* array1, bool* array2)
 		int sum = array1[i] + array2[i] + one;
 		if (sum == 1)
 		{
-			arrayOfSumm[i] = 1;
+			arrayOfSum[i] = 1;
 			one = 0;
 		}
 
 		if (sum == 2)
 		{
-			arrayOfSumm[i] = 0;
+			arrayOfSum[i] = 0;
 			one = 1;
 		}
 
 		if (sum == 3)
 		{
-			arrayOfSumm[i] = 1;
+			arrayOfSum[i] = 1;
 			one = 1;
 		}
 	}
 
-	return arrayOfSumm;
+	return arrayOfSum;
 }
 
 void printBoolArrayOf32(bool const* array)
@@ -65,15 +62,15 @@ void printBoolArrayOf32(bool const* array)
 
 int boolToTen(bool const* array)
 {
-	int dvoika = 1;
+	int doubleElement = 1;
 	int sum = 0;
 	for (int i = 31; i >= 0; --i)
 	{
 		if (array[i] == 1)
 		{
-			sum += dvoika;
+			sum += doubleElement;
 		}
-		dvoika *= 2;
+		doubleElement *= 2;
 	}
 
 	return sum;
@@ -90,14 +87,15 @@ bool testForDoubleConvert()
 		}
 	}
 
+	free(array1);
 	return true;
 }
 
-bool testForDoubleSumm()
+bool testForDoubleSum()
 {
 	bool* array1 = doubleConvert(7);
 	bool* array2 = doubleConvert(8);
-	bool* array3 = doubleSumm(array1, array2);
+	bool* array3 = doubleSum(array1, array2);
 	for (int i = 0; i < 4; ++i)
 	{
 		if (array3[i] != 1)
@@ -105,6 +103,9 @@ bool testForDoubleSumm()
 			return false;
 		}
 	}
+	free(array1);
+	free(array2);
+	free(array3);
 
 	return true;
 }
@@ -113,7 +114,7 @@ bool testForBoolToTen()
 {
 	bool* array1 = doubleConvert(7);
 	bool* array2 = doubleConvert(8);
-	bool* array3 = doubleSumm(array1, array2);
+	bool* array3 = doubleSum(array1, array2);
 	if (boolToTen(array3) == 15)
 	{
 		return true;
@@ -133,7 +134,7 @@ void allTests()
 		printf("double convert is not working properly\n");
 	}
 
-	if (testForDoubleSumm)
+	if (testForDoubleSum)
 	{
 		printf("double summ is working clearly\n");
 	}
