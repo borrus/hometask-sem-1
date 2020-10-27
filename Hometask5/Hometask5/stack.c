@@ -1,16 +1,7 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include "stack.h"
+#include <stdio.h>
 
-struct Node* initializeStack(char const value)
-{
-	struct Node* stack = (struct Node*)malloc(sizeof(struct Node));
-	stack->value = value;
-	stack->next = NULL;
-	return stack;
-}
-
-void push(struct Node** stackPointer, char const value)
+void push(struct Node** stackPointer, int const value)
 {
 	if (*stackPointer == NULL)
 	{
@@ -26,7 +17,7 @@ void push(struct Node** stackPointer, char const value)
 	(*stackPointer) = newHead;
 }
 
-void printStack(struct Node const * stack)
+void printStack(struct Node const* stack)
 {
 	if (stack == NULL)
 	{
@@ -36,7 +27,7 @@ void printStack(struct Node const * stack)
 
 	while (stack->next != NULL)
 	{
-		printf("%c", stack->value);
+		printf("%d", stack->value);
 		stack = stack->next;
 	}
 
@@ -44,9 +35,9 @@ void printStack(struct Node const * stack)
 	printf("\n");
 }
 
-char pop(struct Node** stackPointer)
+int pop(struct Node** stackPointer)
 {
-	char value = (*stackPointer)->value;
+	int value = (*stackPointer)->value;
 	struct Node* temp = (*stackPointer)->next;
 	free(*stackPointer);
 	*stackPointer = temp;
@@ -55,7 +46,7 @@ char pop(struct Node** stackPointer)
 
 void freeStack(struct Node** stackPointer)
 {
-	while ((*stackPointer)-> next != NULL)
+	while ((*stackPointer)->next != NULL)
 	{
 		pop(stackPointer);
 	}
@@ -63,8 +54,7 @@ void freeStack(struct Node** stackPointer)
 	*stackPointer = NULL;
 }
 
-char peek(struct Node* const stack)
+int peek(struct Node* const stack)
 {
 	return stack->value;
 }
-
