@@ -39,10 +39,19 @@ bool isOperation(char const symbol)
 	}
 }
 
-bool priorityIsBiggerOrEqual(char const operator1, char const operator2)
+int priority(char const operator1, char const operator2)
 {
+	if ((operator1 == '*' || operator1 == '/') && (operator2 == '+' || operator2 == '-'))
+	{
+		return 1;
+	}
 
-	return false;
+	if ((operator2 == '*' || operator2 == '/') && (operator1 == '+' || operator1 == '-'))
+	{
+		return -1;
+	}
+
+	return 0;
 }
 
 bool isLeftBracket(char const symbol)
@@ -82,7 +91,7 @@ char* infixToPostfix()
 
 		if (isOperation(symbol))
 		{
-			while (priorityIsBiggerOrEqual(peek(stack), symbol))
+			while (priority(peek(stack), symbol))
 			{
 				push(&queue, pop(&stack));
 			}
