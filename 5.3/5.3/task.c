@@ -79,8 +79,8 @@ bool isRightBracket(char const symbol)
 
 char* infixToPostfix()
 {
-	struct Node* queue;
-	struct Node* stack;
+	struct Node* queue = NULL;
+	struct Node* stack = NULL;
 	char symbol = getchar();
 	while (symbol != '\n')
 	{
