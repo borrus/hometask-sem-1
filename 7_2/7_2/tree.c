@@ -1,6 +1,7 @@
 #include "tree.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 void initializeTree(Tree* tree)
 {
@@ -93,6 +94,39 @@ void createTree(Tree* tree)
 	createSubtree(tree->root, file);
 }
 
+int charToInt(char const value)
+{
+	return (int)value - (int)'0';
+}
+
+int calculateSubTree(Node* node)
+{
+	if (!isOperation(node->value))
+	{
+		return charToInt(node->value);
+	}
+
+	if (node->value == '+')
+	{
+		return calculateSubTree(node->leftChild) + calculateSubTree(node->rightChild);
+	}
+
+	if (node->value == '-')
+	{
+		return calculateSubTree(node->leftChild) - calculateSubTree(node->rightChild);
+	}
+
+	if (node->value == '/')
+	{
+		return calculateSubTree(node->leftChild) / calculateSubTree(node->rightChild);
+	}
+
+	if (node->value == '*')
+	{
+		return calculateSubTree(node->leftChild) * calculateSubTree(node->rightChild);
+	}
+}
+
 int calculateTree(Tree* tree)
 {
 	if (tree->root == NULL)
@@ -101,5 +135,5 @@ int calculateTree(Tree* tree)
 		return -1;
 	}
 
-
+	return calculateSubTree(tree->root);
 }

@@ -6,6 +6,6 @@ int main()
 	Tree tree;
 	createTree(&tree);
 
-	printf("%c", tree.root->rightChild->value);
+	printf("%d", calculateTree(&tree));
 	return 0;
 }
