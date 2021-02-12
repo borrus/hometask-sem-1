@@ -104,57 +104,6 @@ bool testsInsertSort()
 	return true;
 }
 
-bool test1SuperSort()
-{
-	int a[3] = { 2, 1, 3 };
-	superSort(a, 3);
-	int current = -_CRT_INT_MAX;
-
-	for (int i = 0; i < 3; ++i)
-	{
-		if (a[i] < current)
-		{
-			return false;
-			current = a[i];
-		}
-	}
-
-	return true;
-}
-
-bool test2SuperSort()
-{
-	int a[11] = {2, 1, 3, 5, 4, 7, 6, 9, 8, 7, 10};
-	superSort(a, 11);
-	int current = -_CRT_INT_MAX;
-
-	for (int i = 0; i < 11; ++i)
-	{
-		if (a[i] < current)
-		{
-			return false;
-			current = a[i];
-		}
-	}
-
-	return true;
-}
-
-bool testsSuperSort()
-{
-	if (!test1SuperSort())
-	{
-		return false;
-	}
-
-	if (!test2SuperSort())
-	{
-		return false;
-	}
-
-	return true;
-}
-
 bool tests()
 {
 	if (!testsInsertSort())
@@ -163,11 +112,6 @@ bool tests()
 	}
 
 	if (!testsQsort())
-	{
-		return false;
-	}
-
-	if (!testsSuperSort())
 	{
 		return false;
 	}
