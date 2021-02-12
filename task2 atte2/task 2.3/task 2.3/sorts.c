@@ -1,16 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void bubbleSort(int* array, int size)
 {
-    int temp = 0;
-
     for (int i = 1; i < size; ++i) 
     {
-        for (int j = 1; j < size; ++j) 
+        for (int j = 1; j < size - i + 1; ++j) 
         {
             if (array[j] > array[j - 1]) 
             {
-                temp = array[j];
+                int temp = array[j];
                 array[j] = array[j - 1];
                 array[j - 1] = temp;
             }
@@ -18,19 +17,33 @@ void bubbleSort(int* array, int size)
     }
 }
 
-void sortCalculation(int* array, int n, int* sortedArray)
+void countingSort(int* array, int size)
 {
-    int k;
+    int k = INT_MIN;
 
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < size; ++i)
     {
-        k = 0;
-        for (int j = 0; j < n; ++j)
+        if (array[i] > k)
         {
-            if (array[i] > array[j])
-            ++k;
+            k = array[i];
         }
+    }
 
-        sortedArray[k] = array[i];
+    int* c = (int*)calloc(k + 1, sizeof(int));
+
+    for (int i = 0; i < size; ++i)
+    {
+        ++c[array[i]];
+    }
+
+    int b = 0;
+
+    for (int i = 0; i < k + 1; ++i)
+    {
+        for (int j = 0; j < c[i]; ++j) 
+        {
+            array[b] = i;
+            ++b;
+        }
     }
 }

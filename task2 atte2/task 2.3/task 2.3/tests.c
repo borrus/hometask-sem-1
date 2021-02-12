@@ -46,26 +46,10 @@ bool testsBubbleSort()
 bool test1Calc()
 {
 	int array[3] = { 3, 1, 2 };
-	int b[3];
 
-	sortCalculation(array, 3, b);
+	countingSort(array, 3);
 
-	if (b[0] == 1 && b[1] == 2 && b[2] == 3)
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool test2Calc()
-{
-	int array[3] = { -3, -1, -2 };
-	int b[3];
-
-	sortCalculation(array, 3, b);
-
-	if (b[0] == -3 && b[1] == -2 && b[2] == -1)
+	if (array[0] == 1 && array[1] == 2 && array[2] == 3)
 	{
 		return true;
 	}
@@ -76,11 +60,6 @@ bool test2Calc()
 bool testsCalc()
 {
 	if (!test1Calc())
-	{
-		return false;
-	}
-
-	if (!test2Calc())
 	{
 		return false;
 	}
