@@ -19,30 +19,38 @@ void bubbleSort(int* array, int size)
 
 void countingSort(int* array, int size)
 {
-    int k = INT_MIN;
+    int max = INT_MIN;
+    int min = INT_MAX;
 
     for (int i = 0; i < size; ++i)
     {
-        if (array[i] > k)
+        if (array[i] > max)
         {
-            k = array[i];
+            max = array[i];
+        }
+
+        if (array[i] < min)
+        {
+            min = array[i];
         }
     }
 
-    int* c = (int*)calloc(k + 1, sizeof(int));
+    int len = max - min + 1;
+
+    int* c = (int*)calloc(len, sizeof(int));
 
     for (int i = 0; i < size; ++i)
     {
-        ++c[array[i]];
+        ++c[array[i] - min];
     }
 
     int b = 0;
 
-    for (int i = 0; i < k + 1; ++i)
+    for (int i = 0; i < len; ++i)
     {
-        for (int j = 0; j < c[i]; ++j) 
+        if (c[i] != 0)
         {
-            array[b] = i;
+            array[b] = min + i;
             ++b;
         }
     }
