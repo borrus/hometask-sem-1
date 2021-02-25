@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d1c633dc-609e-4e63-ad9c-04ca8325554e}</ProjectGuid>
-    <RootNamespace>Incompleteprivate</RootNamespace>
+    <ProjectGuid>{d3733438-5248-48a2-9a07-1365cc523c67}</ProjectGuid>
+    <RootNamespace>task32</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Incomplete quotient</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,11 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="algoritm.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="task.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="algoritm.h" />
+    <ClInclude Include="task.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
