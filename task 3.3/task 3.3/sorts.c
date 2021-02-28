@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+void qsortRec(int* array, int const size)
+{
+    int i = 0;
+    int j = size - 1;
+    int middleElement = array[size / 2];
+
+    do {
+
+        while (array[i] < middleElement)
+        {
+            ++i;
+        }
+
+        while (array[j] > middleElement)
+        {
+            --j;
+        }
+
+        if (i <= j)
+        {
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+
+            ++i;
+            --j;
+        }
+    } while (i <= j);
+
+    if (j > 0)
+    {
+        qsortRec(array, j + 1);
+    }
+
+    if (i < size)
+    {
+        qsortRec(&array[i], size - i);
+    }
+}
