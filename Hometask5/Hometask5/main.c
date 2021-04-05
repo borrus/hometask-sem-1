@@ -4,7 +4,14 @@
 
 int main()
 {
-	tests();
+	if (!tests())
+	{
+		printf("tests are incorrect");
+
+		return 0;
+	}
+
+	printf("%s", postfixCalculator(inputStringFromConsole()));
 
 	return 0;
 }

@@ -24,6 +24,21 @@ bool isOperator(char const symbol)
 	return symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/';
 }
 
+bool incorrectSymbolsInExpression(char const* expression)
+{
+	int const length = strlen(expression);
+
+	for (int i = 0; i < length; ++i)
+	{
+		if (!isDigit(expression[i]) && !isOperator(expression[i]))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 int charToDigit(char const symbol)
 {
 	return symbol - '0';
@@ -39,6 +54,11 @@ char* intToString(int number)
 
 char* postfixCalculator(char const* expression)
 {
+	if (incorrectSymbolsInExpression(expression))
+	{
+		return "incorrect expression\n";
+	}
+
 	int const length = strlen(expression);
 
 	if (length == 0)
@@ -61,6 +81,11 @@ char* postfixCalculator(char const* expression)
 
 		if (isOperator(symbol))
 		{
+			if (stackLength(operands) < 2)
+			{
+				return "incorrect expression";
+			}
+
 			int operand2 = pop(&operands);
 
 			if (operands == NULL)
