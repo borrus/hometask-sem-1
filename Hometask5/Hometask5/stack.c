@@ -21,26 +21,49 @@ void printStack(struct Node const* stack)
 {
 	if (stack == NULL)
 	{
-		printf("stack is empty!");
+		printf("stack is empty!\n");
 		return;
 	}
 
 	while (stack->next != NULL)
 	{
-		printf("%d", stack->value);
+		printf("%d ", stack->value);
 		stack = stack->next;
 	}
 
-	printf("%c", stack->value);
+	printf("%d ", stack->value);
 	printf("\n");
+}
+
+int stackLength(struct Node* stack)
+{
+	struct Node* temp = stack;
+	int length = 0;
+
+	while (temp != NULL)
+	{
+		++length;
+
+		temp = temp->next;
+	}
+
+	return length;
 }
 
 int pop(struct Node** stackPointer)
 {
+	if (*stackPointer == NULL)
+	{
+		printf("stack is empty\n");
+
+		return;
+	}
+
 	int value = (*stackPointer)->value;
 	struct Node* temp = (*stackPointer)->next;
 	free(*stackPointer);
 	*stackPointer = temp;
+
 	return value;
 }
 
@@ -50,11 +73,19 @@ void freeStack(struct Node** stackPointer)
 	{
 		pop(stackPointer);
 	}
+
 	free(*stackPointer);
 	*stackPointer = NULL;
 }
 
 int peek(struct Node* const stack)
 {
+	if (stack == NULL)
+	{
+		printf("stack is empty\n");
+
+		return;
+	}
+
 	return stack->value;
 }

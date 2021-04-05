@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "task1.h"
+#include "tests.h"
 
 int main()
 {
-	postfixCalculator();
+	tests();
 
 	return 0;
 }

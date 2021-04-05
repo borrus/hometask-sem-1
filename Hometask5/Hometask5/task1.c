@@ -1,15 +1,22 @@
 #include <stdio.h>
 #include "stack.h"
+#include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "task1.h"
 
-bool isDigit(char const symbol)
+char* inputStringFromConsole()
 {
-	int const code = (int)symbol;
-	int const code0 = (int)'0';
-	int const code9 = (int)'9';
+	printf("input your expression without spaces:\n");
+	char* string = (char*)malloc(sizeof(char) * 100);
+	scanf("%s", string);
 
-	return code >= code0 && code <= code9;
+	return string;
+}
+
+bool isDigit(char const symbol)
+{	
+	return symbol >= '0' && symbol <= '9';
 }
 
 bool isOperator(char const symbol)
@@ -19,20 +26,50 @@ bool isOperator(char const symbol)
 
 int charToDigit(char const symbol)
 {
-	return (int)symbol - (int)'0';
+	return symbol - '0';
 }
 
-void postfixCalculator()
+char* intToString(int number)
 {
-	struct Node* operands = NULL;
+	char* string = (char*)malloc(sizeof(char) * 100);
+	sprintf(string, "%d", number);
 
-	char symbol = getchar();
+	return string;
+}
 
-	while (symbol != '\n')
+char* postfixCalculator(char const* expression)
+{
+	int const length = strlen(expression);
+
+	if (length == 0)
 	{
+		return "expression is empty\n";
+	}
+
+	struct Node* operands = NULL;
+	char symbol = expression[0];
+	int position = 0;
+
+	while (position != length)
+	{
+		if (stackLength(operands) > 3)
+		{
+			return "incorrect expression\n";
+		}
+
+		++position;
+
 		if (isOperator(symbol))
 		{
 			int operand2 = pop(&operands);
+
+			if (operands == NULL)
+			{
+				printf("incorrect expression\n");
+
+				return;
+			}
+
 			int operand1 = pop(&operands);
 
 			switch (symbol)
@@ -59,10 +96,19 @@ void postfixCalculator()
 			push(&operands, charToDigit(symbol));
 		}
 
-		symbol = getchar();
+		symbol = expression[position];
 	}
 
-	printf("%d", peek(operands));
+	if (stackLength(operands) > 1)
+	{
+		return "incorrect expression\n";
+	}
+
+	
+	char* answer = (char*)malloc(sizeof(char) * 100);
+	sprintf(answer, "%d", peek(operands));
 
 	freeStack(&operands);
+
+	return answer;
 }

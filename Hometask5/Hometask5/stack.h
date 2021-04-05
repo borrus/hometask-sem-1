@@ -15,3 +15,5 @@ int pop(struct Node** stackPointer);
 void freeStack(struct Node** stackPointer);
 
 int peek(struct Node* const stack);
+
+int stackLength(struct Node* stack);

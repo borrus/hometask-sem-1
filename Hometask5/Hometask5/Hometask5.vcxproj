@@ -143,10 +143,12 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="stack.c" />
     <ClCompile Include="task1.c" />
+    <ClCompile Include="tests.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stack.h" />
     <ClInclude Include="task1.h" />
+    <ClInclude Include="tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
