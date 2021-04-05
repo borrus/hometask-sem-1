@@ -23,7 +23,7 @@ void printStack(struct Node const* stack)
 {
 	if (stack == NULL)
 	{
-		printf("stack is empty!");
+		printf("stack is empty!\n");
 		return;
 	}
 
@@ -39,15 +39,27 @@ void printStack(struct Node const* stack)
 
 char pop(struct Node** stackPointer)
 {
+	if (*stackPointer  == NULL)
+	{
+		return "isEmpty";
+	}
+
 	char value = (*stackPointer)->value;
 	struct Node* temp = (*stackPointer)->next;
+
 	free(*stackPointer);
 	*stackPointer = temp;
+
 	return value;
 }
 
 void freeStack(struct Node** stackPointer)
 {
+	if (*stackPointer == NULL)
+	{
+		return;
+	}
+
 	while ((*stackPointer)->next != NULL)
 	{
 		pop(stackPointer);

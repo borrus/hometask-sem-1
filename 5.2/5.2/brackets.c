@@ -39,33 +39,30 @@ bool bracketsIsPair(char const leftBracket, char const rightBracket)
 {
 	char leftBrackets[3] = { '(', '[', '{' };
 	char rightBrackets[3] = { ')', ']', '}' };
+
 	for (int i = 0; i < 3; ++i)
 	{
 		if (leftBracket == leftBrackets[i])
 		{
-			if (rightBracket == rightBrackets[i])
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return rightBracket == rightBrackets[i];
 		}
 	}
 }
 
-bool bracketsBalance()
+bool bracketsBalance(char const* string)
 {
-	char symbol = getchar();
+	char symbol = string[0];
+	int position = 1;
+
 	while (!isBracket(symbol))
 	{
-		if (symbol == '\n')
+		if (symbol == '\0')
 		{
 			return true;
 		}
 
-		symbol = getchar();
+		symbol = string[position];
+		++position;
 	}
 
 	if (isRightBracket(symbol))
@@ -75,8 +72,10 @@ bool bracketsBalance()
 
 	struct stack* leftBrackets = initializeStack(symbol);
 
-	symbol = getchar();
-	while (symbol != '\n')
+	symbol = string[position];
+	++position;
+
+	while (symbol != '\0')
 	{
 		if (isLeftBracket(symbol))
 		{
@@ -85,6 +84,11 @@ bool bracketsBalance()
 
 		if (isRightBracket(symbol))
 		{
+			if (leftBrackets == NULL)
+			{
+				return false;
+			}
+
 			if (bracketsIsPair(peek(leftBrackets), symbol))
 			{
 				pop(&leftBrackets);
@@ -95,13 +99,12 @@ bool bracketsBalance()
 			}
 		}
 
-		symbol = getchar();
+		symbol = string[position];
+		++position;
 	}
 
-	if (leftBrackets == NULL)
-	{
-		return true;
-	}
+	bool flag = (leftBrackets == NULL);
+	freeStack(&leftBrackets);
 
-	return false;
+	return flag;
 }

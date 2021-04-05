@@ -1,4 +1,5 @@
 #pragma once
 #include <stdbool.h>
 
-bool bracketsBalance();
+//checks brackets balance, returns 1 if brackets are balanced
+bool bracketsBalance(char const* string);
