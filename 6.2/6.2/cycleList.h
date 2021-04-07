@@ -1,16 +1,15 @@
 #pragma once
 
-typedef struct Node
-{
-	struct Node* next;
-	struct Node* previous;
-	int value;
+struct CycleList;
 
-}Node;
+struct CycleList* initializeList();
 
-typedef struct CycleList 
-{
-	Node* head;
-	int size;
+void addElement(struct CycleList* cycleListPointer, int const value);
 
-}CycleList;
+void printList(struct CycleList const* cycleListPointer);
+
+void popHead(struct CycleList* cycleListPointer);
+
+void deleteElement(struct CycleList* cycleListPointer, int const position);
+
+int joseph(struct CycleList* cycleListPointer, int const position);
