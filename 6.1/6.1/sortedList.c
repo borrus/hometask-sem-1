@@ -1,17 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "sortedList.h"
 #include <stdbool.h>
 
-void initializeList(SortedList* sortedListPointer)
+struct Node
+{
+	int value;
+	struct Node* next;
+	struct Node* previous;
+};
+
+struct SortedList
+{
+	struct Node* head;
+	struct Node* tail;
+	int size;
+};
+
+
+void initializeList(struct SortedList* sortedListPointer)
 {
 	sortedListPointer->head = NULL;
 	sortedListPointer->tail = NULL;
 	sortedListPointer->size = 0;
 }
 
-void pushFront(SortedList* sortedListPointer, int const value)
+void pushFront(struct SortedList* sortedListPointer, int const value)
 {
-	Node* newHead = (Node*)malloc(sizeof(Node));
+	struct Node* newHead = (struct Node*)malloc(sizeof(struct Node));
 	newHead->value = value;
 	newHead->next = sortedListPointer->head;
 	sortedListPointer->head->previous = newHead;
@@ -20,9 +36,12 @@ void pushFront(SortedList* sortedListPointer, int const value)
 	++sortedListPointer->size;
 }
 
-void pushBack(SortedList* sortedListPointer, int const value)
+void pushBack(struct SortedList* sortedListPointer, int const value)
 {
-	Node* newTail = (Node*)malloc(sizeof(Node));
+	struct Node* newTail = (struct Node*)malloc(sizeof(struct Node));
+	newTail->next = NULL;
+	newTail->previous = NULL;
+	newTail->value = 0;
 	newTail->value = value;
 	newTail->previous = sortedListPointer->tail;
 	sortedListPointer->tail->next = newTail;
@@ -31,11 +50,11 @@ void pushBack(SortedList* sortedListPointer, int const value)
 	++sortedListPointer->size;
 }
 
-void addToList(SortedList* sortedListPointer, int const value)
+void addToList(struct SortedList* sortedListPointer, int const value)
 {
 	if (sortedListPointer->size == 0)
 	{
-		sortedListPointer->head = (Node*)malloc(sizeof(Node));
+		sortedListPointer->head = (struct Node*)malloc(sizeof(struct Node));
 		sortedListPointer->head->next = NULL;
 		sortedListPointer->head->value = value;
 		sortedListPointer->head->previous = NULL;
@@ -63,7 +82,7 @@ void addToList(SortedList* sortedListPointer, int const value)
 		return;
 	}
 
-	Node* temp = sortedListPointer->head;
+	struct Node* temp = sortedListPointer->head;
 
 	for (int i = 0; i < sortedListPointer->size; ++i)
 	{
@@ -87,9 +106,9 @@ void addToList(SortedList* sortedListPointer, int const value)
 		return;
 	}
 
-	Node* node1 = temp;
-	Node* node2 = (Node*)malloc(sizeof(Node));
-	Node* node3 = node1->next;
+	struct Node* node1 = temp;
+	struct Node* node2 = (struct Node*)malloc(sizeof(struct Node));
+	struct Node* node3 = node1->next;
 	node2->previous = node1;
 	node2->next = node3;
 	node3->previous = node2;
@@ -99,7 +118,7 @@ void addToList(SortedList* sortedListPointer, int const value)
 	++sortedListPointer->size;
 }
 
-void printList(SortedList const sortedList)
+void printList(struct SortedList const sortedList)
 {
 	if (sortedList.size == 0)
 	{
@@ -107,7 +126,7 @@ void printList(SortedList const sortedList)
 		return;
 	}
 
-	Node* temp = sortedList.head;
+	struct Node* temp = sortedList.head;
 
 	while (temp->next != NULL)
 	{
@@ -117,7 +136,7 @@ void printList(SortedList const sortedList)
 	printf("%d\n", temp->value);
 }
 
-void popFront(SortedList* sortedList)
+void popFront(struct SortedList* sortedList)
 {
 	if (sortedList->size == 0)
 	{
@@ -127,18 +146,20 @@ void popFront(SortedList* sortedList)
 	if (sortedList->size == 1)
 	{
 		free(sortedList->head);
+		sortedList->head = NULL;
+		sortedList->tail = NULL;
 		sortedList->size = 0;
 		return;
 	}
 
-	Node* newHead = sortedList->head->next;
+	struct Node* newHead = sortedList->head->next;
 	free(sortedList->head);
 	sortedList->head = newHead;
 	sortedList->head->previous = NULL;
 	--sortedList->size;
 }
 
-void popBack(SortedList* sortedList)
+void popBack(struct SortedList* sortedList)
 {
 	if (sortedList->size == 0)
 	{
@@ -152,14 +173,14 @@ void popBack(SortedList* sortedList)
 		return;
 	}
 
-	Node* newTail = sortedList->tail->previous;
+	struct Node* newTail = sortedList->tail->previous;
 	free(sortedList->tail);
 	sortedList->tail = newTail;
 	sortedList->tail->next = NULL;
 	--sortedList->size;
 }
 
-void popElement(SortedList* sortedList, Node* element)
+void popElement(struct SortedList* sortedList, struct Node* element)
 {
 	if (element == sortedList->head)
 	{
@@ -173,24 +194,24 @@ void popElement(SortedList* sortedList, Node* element)
 		return;
 	}
 
-	Node* node1 = element->previous;
-	Node* node2 = element;
-	Node* node3 = element->next;
+	struct Node* node1 = element->previous;
+	struct Node* node2 = element;
+	struct Node* node3 = element->next;
 	free(element);
 	node1->next = node3;
 	node3->previous = node1;
 	--sortedList->size;
 }
 
-void deleteElement(SortedList* sortedList, int const value)
+void deleteElement(struct SortedList* sortedList, int const value)
 {
 	if (sortedList->size == 0)
 	{
 		return;
 	}
 
-	Node* element = NULL;
-	for (Node* temp = sortedList->head; temp != NULL; temp = temp->next)
+	struct Node* element = NULL;
+	for (struct Node* temp = sortedList->head; temp != NULL; temp = temp->next)
 	{
 		if (temp->value == value)
 		{
@@ -205,4 +226,94 @@ void deleteElement(SortedList* sortedList, int const value)
 	}
 
 	popElement(sortedList, element);
+}
+
+void task()
+{
+	struct SortedList list;
+	initializeList(&list);
+	int menuItem = -1;
+
+	while (true)
+	{
+		scanf("%d", &menuItem);
+		if (menuItem == 0)
+		{
+			printf("bye :)");
+			break;
+		}
+
+		if (menuItem == 1)
+		{
+			int value = 0;
+			printf("input value: ");
+			scanf("%d", &value);
+			addToList(&list, value);
+			continue;
+		}
+
+		if (menuItem == 2)
+		{
+			int value = 0;
+			printf("input value: ");
+			scanf("%d", &value);
+			deleteElement(&list, value);
+			continue;
+		}
+
+		if (menuItem == 3)
+		{
+			printList(list);
+			continue;
+		}
+	}
+}
+
+bool testPushFront()
+{
+	struct SortedList list;
+	initializeList(&list);
+	pushFront(&list, 1);
+	pushFront(&list, 2);
+	pushFront(&list, 3);
+
+	if (list.head == 3 && list.head->next == 2 && list.head->next->next == 1)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool testPushBack()
+{
+	struct SortedList list;
+	initializeList(&list);
+	pushBack(&list, 1);
+	pushBack(&list, 2);
+	pushBack(&list, 3);
+
+	if (list.head == 1 && list.head->next == 2 && list.head->next->next == 3)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool testPopBack()
+{
+	struct SortedList list;
+	initializeList(&list);
+	pushBack(&list, 1);
+	pushBack(&list, 2);
+	pushBack(&list, 3);
+	popBack(&list);
+
+	if (list.head == 1 && list.head->next == 2 && list.head->next->next == NULL)
+	{
+		return true;
+	}
+
+	return false;
 }

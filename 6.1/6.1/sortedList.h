@@ -1,27 +1,25 @@
 #pragma once
+#include <stdbool.h>
 
-typedef struct Node
-{
-	int value;
-	struct Node* next;
-	struct Node* previous;
-}Node;
+//init list
+void initializeList(struct SortedList* sortedListPointer);
 
-typedef struct SortedList
-{
-	Node* head;
-	Node* tail;
-	int size;
-}SortedList;
+//push element to list
+void addToList(struct SortedList* sortedListPointer, int const value);
 
-void initializeList(SortedList* sortedListPointer);
+//print list
+void printList(struct SortedList const sortedList);
 
-void addToList(SortedList* sortedListPointer, int const value);
+//pop front side
+void popFront(struct SortedList* sortedList);
 
-void printList(SortedList const sortedList);
+//pop back
+void popBack(struct SortedList* sortedList);
 
-void popFront(SortedList* sortedList);
+//deletes element
+void deleteElement(struct SortedList* sortedList, int const value);
 
-void popBack(SortedList* sortedList);
+//task 
+void task();
 
-void deleteElement(SortedList* sortedList, int const value);
+bool testPopBack();
