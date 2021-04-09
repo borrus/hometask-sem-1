@@ -5,14 +5,19 @@
 
 int main()
 {
-	/*printf("Hello, these are your options: \n");
+	if (!tests())
+	{
+		printf("tests failed\n");
+
+		return 0;
+	}
+
+	printf("Hello, these are your options: \n");
 	printf("0 - exit\n");
 	printf("1 - add a value to the list\n");
 	printf("2 - delete value from a list\n");
 	printf("3 - printf list\n");
-	task();*/
-
-	tests();
+	task();
 
 	return 0;
 }
