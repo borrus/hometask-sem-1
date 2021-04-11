@@ -20,5 +20,7 @@ int main()
 	task(number);
 	printf("%s", number);
 
+	free(number);
+
 	return 0;
 }

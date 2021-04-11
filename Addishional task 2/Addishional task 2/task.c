@@ -41,13 +41,13 @@ void sort(char* number)
 {
 	int const length = strlen(number);
 
-	for (int i = 0; i < length; ++i)
+	for (int i = 0; i < length - 1; ++i)
 	{
-		for (int j = 0; j < length - 1; ++j)
+		for (int j = length - 1; j > i ; --j)
 		{
-			if (number[j] > number[j + 1])
+			if (number[j - 1] > number[j])
 			{
-				swap(&number[j], &number[j + 1]);
+				swap(&number[j - 1], &number[j]);
 			}
 		}
 	}
