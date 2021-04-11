@@ -18,6 +18,18 @@ char* intToCharArray(int const number)
 	return string;
 }
 
+char* spaces(int const amount)
+{
+	char* res = (char*)malloc(sizeof(char) * (amount + 1));
+	res[amount] = '\0';
+	for (int i = 0; i < amount; i++)
+	{
+		res[i] = ' ';
+	}
+
+	return res;
+}
+
 char* polynomial(int const* array, int const size)
 {
 	if (size == 0)
@@ -25,13 +37,15 @@ char* polynomial(int const* array, int const size)
 		return "polynomial is incorrect";
 	}
 
+	char* degrees = (char*)malloc(sizeof(char) * 1000);
 	char* outputString = (char*)malloc(sizeof(char) * 1000);
 
-	if (outputString == NULL)
+	if (outputString == NULL || degrees == NULL)
 	{
 		return NULL;
 	}
 
+	degrees[0] = '\0';
 	outputString[0] = '\0';
 
 	for (int i = 0; i < size; ++i)
@@ -59,16 +73,27 @@ char* polynomial(int const* array, int const size)
 			if (degree > 0)
 			{
 				strcat(outputString, "x");
+
 				if (degree > 1)
 				{
-					strcat(outputString, "^");
-					strcat(outputString, intToCharArray(degree));
+					int polyLen = strlen(outputString);
+					int degreeLen = strlen(degrees);
+
+					if (degreeLen < polyLen)
+					{
+						strcat(degrees, spaces(polyLen - degreeLen));
+					}
+
+					strcat(degrees, intToCharArray(degree));
 				}
 			}
 		}
 	}
 
-	return outputString;
+	strcat(degrees, "\n");
+	strcat(degrees, outputString);
+
+	return degrees;
 }
 
 char* task(int const* array, int const size)
