@@ -37,7 +37,7 @@ bool test1()
 
 bool test2()
 {
-	int array[3] = { 0,1,2 };
+	int array[3] = { 0, 1, 2 };
 
 	if (stringsAreEqual(task(array, 3), "x + 2"));
 	{
@@ -51,9 +51,9 @@ bool test2()
 
 bool test3()
 {
-	int array[6] = { 0,0,4,-2,0,1 };
+	int array[6] = { 0, 0, 0, 0, 0, 1 };
 
-	if (stringsAreEqual(task(array, 6), "4x^3 - 2x^2 + 1"));
+	if (stringsAreEqual(task(array, 6), "1"));
 	{
 		return true;
 	}

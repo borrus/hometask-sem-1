@@ -14,9 +14,9 @@ int main()
 	}
 
 	printf("tests completed\n");
-	int array[10] = { 1, 5, 3, -25, 0, 0, 15, -3, 0, 1 };
+	int array[20] = { 1, 5, 3, -25, 0, 0, 15, -3, 0, 1, 15, -32, 34, 1, 5, 0, 6, 4, 65 , -2 };
 	printf("task result:\n\n");
-	printf("%s\n\n", task(array, 10));
+	printf("%s\n\n", task(array, 20));
 
 	return 0;
 }

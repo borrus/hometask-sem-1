@@ -22,6 +22,7 @@ char* spaces(int const amount)
 {
 	char* res = (char*)malloc(sizeof(char) * (amount + 1));
 	res[amount] = '\0';
+
 	for (int i = 0; i < amount; i++)
 	{
 		res[i] = ' ';
@@ -40,7 +41,12 @@ char* polynomial(int const* array, int const size)
 	char* degrees = (char*)malloc(sizeof(char) * 1000);
 	char* outputString = (char*)malloc(sizeof(char) * 1000);
 
-	if (outputString == NULL || degrees == NULL)
+	if (outputString == NULL)
+	{
+		return NULL;
+	}
+
+	if (degrees == NULL)
 	{
 		return NULL;
 	}
@@ -92,6 +98,7 @@ char* polynomial(int const* array, int const size)
 
 	strcat(degrees, "\n");
 	strcat(degrees, outputString);
+	free(outputString);
 
 	return degrees;
 }
@@ -123,5 +130,9 @@ char* task(int const* array, int const size)
 		fixedArray[i] = array[i + position];
 	}
 
-	return polynomial(fixedArray, length);
+	char* result = (char*)malloc(sizeof(char) * length);
+	result = polynomial(fixedArray, length);
+	free(fixedArray);
+
+	return result;
 }
