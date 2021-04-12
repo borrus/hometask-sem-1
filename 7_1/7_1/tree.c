@@ -18,6 +18,31 @@ typedef struct Tree
 	Node* root;
 } Tree;
 
+Node* getTreeRoot(Tree* tree)
+{
+	return tree->root;
+}
+
+Node* getLeftChild(Node* node)
+{
+	return node->left;
+}
+
+Node* getRightChild(Node* node)
+{
+	return node->right;
+}
+
+int getNodeKey(Node* node)
+{
+	return node->key;
+}
+
+char* getNodeValue(Node* node)
+{
+	return node->value;
+}
+
 Tree* initialize()
 {
 	Tree* tree = (Tree*)malloc(sizeof(Tree));

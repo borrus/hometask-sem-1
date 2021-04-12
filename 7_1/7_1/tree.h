@@ -5,6 +5,22 @@ typedef struct Node Node;
 
 typedef struct Tree Tree;
 
+//returns tree root;
+Node* getTreeRoot(Tree* tree);
+
+//returns left child of a current node
+Node* getLeftChild(Node* node);
+
+//returns right child of a current node
+Node* getRightChild(Node* node);
+
+//returns key of a current node
+int getNodeKey(Node* node);
+
+//returns value of a current node
+char* getNodeValue(Node* node);
+
+//returns node by key
 Node* getNodeByKey(Tree* const tree, int const key);
 
 //adding value by key
