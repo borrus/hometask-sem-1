@@ -4,18 +4,9 @@
 
 void swap(char* a, char* b)
 {
-	char* c = (char*)malloc(sizeof(char) * 100);
-
-	if (c == NULL)
-	{
-		return;
-	}
-
-	*c = *b;
+	char c = *b;
 	*b = *a;
-	*a = *c;
-
-	free(c);
+	*a = c;
 }
 
 char* copyStr(char const* source)
