@@ -1,11 +1,18 @@
-#include "tree.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "tests.h"
+#include "tree.h"
 
 int main()
 {
-	Tree tree;
-	createTree(&tree);
+	if (!tests())
+	{
+		printf("tests are failed\n");
 
-	printf("%d", calculateTree(&tree));
+		return;
+	}
+
+	printf("tests completed\n\n");
+
 	return 0;
 }

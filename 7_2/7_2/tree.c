@@ -2,25 +2,34 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include "utilities.h"
+
+typedef struct Node
+{
+	struct Node* leftChild;
+	struct Node* rightChild;
+	struct Node* parent;
+
+	char value;
+} Node;
+
+typedef struct Tree
+{
+	Node* root;
+} Tree;
 
 void initializeTree(Tree* tree)
 {
 	tree->root = NULL;
 }
 
-bool isOperation(char const symbol)
+void createSon(Node* parent, Node* node, char value)
 {
-	if (symbol == '*' || symbol == '/' || symbol == '-' || symbol == '+')
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool isDigit(char const symbol)
-{
-	return !isOperation(symbol);
+	node->parent = parent;
+	node->leftChild = NULL;
+	node->rightChild = NULL;
+	node->value = value;
 }
 
 void createSubtree(Node* subTree, FILE* file)
@@ -31,16 +40,20 @@ void createSubtree(Node* subTree, FILE* file)
 	}
 
 	char symbol = '\0';
+
 	if (!fscanf(file, "%c", &symbol))
 	{
 		return;
 	}
 
 	subTree->leftChild = (Node*)malloc(sizeof(Node));
-	subTree->leftChild->value = symbol;
-	subTree->leftChild->leftChild = NULL;
-	subTree->leftChild->rightChild = NULL;
-	subTree->leftChild->parent = subTree;
+
+	if (subTree->leftChild == NULL)
+	{
+		return;
+	}
+
+	createSon(subTree, subTree->leftChild, symbol);
 
 	if (isOperation(symbol))
 	{
@@ -53,16 +66,20 @@ void createSubtree(Node* subTree, FILE* file)
 	}
 
 	symbol = '\0';
+
 	if (!fscanf(file, "%c", &symbol))
 	{
 		return;
 	}
 
 	subTree->rightChild = (Node*)malloc(sizeof(Node));
-	subTree->rightChild->value = symbol;
-	subTree->rightChild->leftChild = NULL;
-	subTree->rightChild->rightChild = NULL;
-	subTree->rightChild->parent = subTree;
+
+	if (subTree->rightChild == NULL)
+	{
+		return;
+	}
+
+	createSon(subTree, subTree->rightChild, symbol);
 
 	if (isOperation(symbol))
 	{
@@ -70,9 +87,14 @@ void createSubtree(Node* subTree, FILE* file)
 	}
 }
 
-void createTree(Tree* tree)
+void createTree(Tree* tree, char* path)
 {
-	FILE* file = fopen("test.txt", "r");
+	FILE* file = fopen(path, "r");
+
+	if (file == NULL)
+	{
+		return;
+	}
 
 	if (feof(file))
 	{
@@ -80,23 +102,22 @@ void createTree(Tree* tree)
 	}
 
 	char symbol = '\0';
+
 	if (!fscanf(file, "%c", &symbol))
 	{
 		return;
 	}
 
 	tree->root = (Node*)malloc(sizeof(Node));
-	tree->root->value = symbol;
-	tree->root->leftChild = NULL;
-	tree->root->rightChild = NULL;
-	tree->root->parent = NULL;
+
+	if (tree->root == NULL)
+	{
+		return;
+	}
+
+	createSon(NULL, tree->root, symbol);
 
 	createSubtree(tree->root, file);
-}
-
-int charToInt(char const value)
-{
-	return (int)value - (int)'0';
 }
 
 int calculateSubTree(Node* node)
