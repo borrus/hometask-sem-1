@@ -1,19 +1,9 @@
 #pragma once
 #include <stdbool.h>
 
-typedef struct Node
-{
-	struct Node* left;
-	struct Node* right;
-	struct Node* parent;
-	int key;
-	char* value;
-} Node;
+typedef struct Node Node;
 
-typedef struct Tree
-{
-	Node* root;
-} Tree;
+typedef struct Tree Tree;
 
 Node* getNodeByKey(Tree* const tree, int const key);
 

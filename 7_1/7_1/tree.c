@@ -4,17 +4,47 @@
 #include <stdbool.h>
 #include <math.h>
 
+typedef struct Node
+{
+	struct Node* left;
+	struct Node* right;
+	struct Node* parent;
+	int key;
+	char* value;
+} Node;
+
+typedef struct Tree
+{
+	Node* root;
+} Tree;
+
 Tree* initialize()
 {
 	Tree* tree = (Tree*)malloc(sizeof(Tree));
+
+	if (tree == NULL)
+	{
+		return NULL;
+	}
+
 	tree->root = NULL;
 	return tree;
+}
+
+void createNode(Node* node, int const key, char const* value)
+{
+	node->key = key;
+	node->value = value;
+	node->left = NULL;
+	node->right = NULL;
+	node->parent = node;
 }
 
 void addValueByKeyNode(Node* node, int const key, char* const value)
 {
 	if (key == node->key)
 	{
+		free(node->value);
 		node->value = value;
 		return;
 	}
@@ -24,15 +54,19 @@ void addValueByKeyNode(Node* node, int const key, char* const value)
 		if (node->left == NULL)
 		{
 			node->left = (Node*)malloc(sizeof(Node));
-			node->left->key = key;
-			node->left->value = value;
-			node->left->left = NULL;
-			node->left->right = NULL;
-			node->left->parent = node;
+
+			if (node->left == NULL)
+			{
+				return;
+			}
+
+			createNode(node->left, key, value);
+
 			return;
 		}
 
 		addValueByKeyNode(node->left, key, value);
+
 		return;
 	}
 
@@ -41,15 +75,19 @@ void addValueByKeyNode(Node* node, int const key, char* const value)
 		if (node->right == NULL)
 		{
 			node->right = (Node*)malloc(sizeof(Node));
-			node->right->key = key;
-			node->right->value = value;
-			node->right->right = NULL;
-			node->right->left = NULL;
-			node->right->parent = node;
+
+			if (node->right == NULL)
+			{
+				return;
+			}
+
+			createNode(node->right, key, value);
+
 			return;
 		}
 
 		addValueByKeyNode(node->right, key, value);
+
 		return;
 	}
 }
@@ -59,11 +97,14 @@ void addValueByKey(Tree* tree, int const key, char* const value)
 	if (tree->root == NULL)
 	{
 		tree->root = (Node*)malloc(sizeof(Node));
-		tree->root->key = key;
-		tree->root->value = value;
-		tree->root->left = NULL;
-		tree->root->right = NULL;
-		tree->root->parent = NULL;
+
+		if (tree->root == NULL)
+		{
+			return;
+		}
+
+		createNode(tree->root, key, value);
+
 		return;
 	}
 
@@ -139,12 +180,12 @@ Node* getMaxNodeLeftNode(Node* const node)
 
 void deleteElementByKey(Tree* tree, int const key)
 {
-	if (!keyExist(&tree, key))
+	if (!keyExist(tree, key))
 	{
 		return;
 	}
 
-	Node* nodeToDelete = getNodeByKey(&tree, key);
+	Node* nodeToDelete = getNodeByKey(tree, key);
 
 	if (nodeToDelete == tree->root)
 	{
@@ -163,6 +204,8 @@ void deleteElementByKey(Tree* tree, int const key)
 		}
 
 		nodeToDelete->parent->left = NULL;
+		free(nodeToDelete->value);
+		free(nodeToDelete->key);
 		free(nodeToDelete);
 		return;
 	}
