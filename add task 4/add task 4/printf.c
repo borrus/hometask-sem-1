@@ -64,6 +64,18 @@ char* emptyStr()
 	return res;
 }
 
+char* spaces(int const amount)
+{
+	char* res = (char*)malloc(sizeof(char) * (amount + 1));
+	res[amount] = '\0';
+	for (int i = 0; i < amount; i++)
+	{
+		res[i] = ' ';
+	}
+
+	return res;
+}
+
 int numberLength(int number)
 {
 	int length = 0;
@@ -147,7 +159,7 @@ bool inArray(char const* array, int const size, char symbol)
 	return false;
 }
 
-char* myPrintf(char const* format, void* args, int const size)
+char* myPrintf(char const* format, void** args, int const size)
 {
 	int const length = strlen(format);
 	char* output = emptyStr();
@@ -168,6 +180,8 @@ char* myPrintf(char const* format, void* args, int const size)
 		{
 			if (amountOfArguments < size)
 			{
+				free(output);
+
 				return "incorrect expression";
 			}
 
@@ -194,11 +208,15 @@ char* myPrintf(char const* format, void* args, int const size)
 		{
 			if (amountOfPercents % 2 == 1)
 			{
+				free(output);
+
 				return "incorrect expression";
 			}
 
 			if (amountOfArguments < size)
 			{
+				free(output);
+
 				return "incorrect expression";
 			}
 
@@ -217,49 +235,86 @@ char* myPrintf(char const* format, void* args, int const size)
 
 		if (inArray(legalTypes, 3, type) && amountOfArguments > size)
 		{
+			free(output);
+
 			return "incorrect expression";
 		}
 
 		if (type == 'i')
 		{
-			int* intPointer = (int*)args;
+			int* intPointer = (int*)args[amountOfArguments - 1];
 			strPlusStr(&output, intToStr(*intPointer));
-			args = (void*)(intPointer + 1);
 		}
 		else if (type == 'c')
 		{
-			char* charPointer = (char*)args;
+			char* charPointer = (char*)args[amountOfArguments - 1];
 			strPlusSymbol(&output, *charPointer);
-			args = (void*)(charPointer + 1);
 		}
 		else if (type == 's')
 		{
-			char* str = (char*)args;
+			char* str = (char*)args[amountOfArguments - 1];
 			strPlusStr(&output, str);
-			args = (void*)(str + strlen(str) + 1);
 		}
 		else if (type == '*')
 		{
 			++i;
-			char pointerType = format[i];
+			char type = format[i];
 
-			if (!inArray(legalTypes, 3, pointerType))
+			if (!inArray(legalTypes, 3, type))
 			{
+				free(output);
+
 				return "incorrect expression";
 			}
 
-			int** intPPointer = (int**)args;
-			strPlusStr(&output, intToStr(*intPPointer));
-			args = (void*)(intPPointer + 1);
+			int* lenPointer = (int*)args[amountOfArguments - 1];
+			++amountOfArguments;
+
+			int const minlength = *lenPointer;
+
+			if (type == 'i')
+			{
+				int* intPointer = (int*)args[amountOfArguments - 1];
+				char* add = intToStr(*intPointer);
+				int const currentlength = strlen(add);
+				if (currentlength < minlength)
+				{
+					strPlusStr(&output, spaces(minlength - currentlength));
+				}
+				strPlusStr(&output, add);
+			}
+			else if (type == 'c')
+			{
+				char* charPointer = (char*)args[amountOfArguments - 1];
+				if (1 < minlength)
+				{
+					strPlusStr(&output, spaces(minlength - 1));
+				}
+				strPlusSymbol(&output, *charPointer);
+			}
+			else if (type == 's')
+			{
+				char* str = (char*)args[amountOfArguments - 1];
+				int const currentlength = strlen(str);
+				if (currentlength < minlength)
+				{
+					strPlusStr(&output, spaces(minlength - currentlength));
+				}
+				strPlusStr(&output, str);
+			}
 		}
 		else
 		{
+			free(output);
+
 			return "incorrect expression";
 		}
 	}
 
 	if (amountOfArguments < size)
 	{
+		free(output);
+
 		return "incorrect expression";
 	}
 

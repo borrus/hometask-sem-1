@@ -29,4 +29,4 @@ char* int10To16(int number);
 bool inArray(char const* array, int const size, char symbol);
 
 //priiiiiintfff:)
-char* myPrintf(char const* format, void* args, int const size);
+char* myPrintf(char const* format, void** args, int const size);

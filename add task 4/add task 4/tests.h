@@ -1,4 +1,4 @@
 #pragma once
 
 //test
-void test();
+bool test1();

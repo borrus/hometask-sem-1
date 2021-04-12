@@ -4,7 +4,7 @@
 
 int main()
 {
-	test();
+	printf("%d", test1());
 
 	return 0;
 }
