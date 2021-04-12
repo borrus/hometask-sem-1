@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "stack.h"
+#include "list.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
 bool isDigit(char const symbol)
 {
@@ -42,23 +43,15 @@ int priority(char const operator1, char const operator2)
 bool isLeftBracket(char const symbol)
 {
 	char leftBracket = '(';
-	if (symbol == leftBracket)
-	{
-		return true;
-	}
 
-	return false;
+	return symbol == leftBracket;
 }
 
 bool isRightBracket(char const symbol)
 {
 	char rightBracket = ')';
-	if (symbol == rightBracket)
-	{
-		return true;
-	}
-
-	return false;
+	
+	return symbol == rightBracket;
 }
 
 bool isBracket(char const symbol)
@@ -100,6 +93,8 @@ char* infixToPostfix(char const* string)
 			{
 				if (!isOperation(peek(stack)))
 				{
+					free(stack);
+
 					return "incorrect expression";
 				}
 
@@ -129,6 +124,9 @@ char* infixToPostfix(char const* string)
 		pushBack(queue, peek(stack));
 		popFront(stack);
 	}
+	
+	char* returnSring = toString(queue);
+	free(queue);
 
-	return toString(queue);
+	return returnSring;
 }

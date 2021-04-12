@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "task.h"
-#include "stack.h"
+#include "list.h"
 #include "tests.h"
 
 int main()
@@ -18,5 +18,6 @@ int main()
 	scanf("%s", string);
 	printf("%s", infixToPostfix(string));
 	
+	free(string);
 	return 0;
 }

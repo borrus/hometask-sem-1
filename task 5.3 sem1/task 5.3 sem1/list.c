@@ -161,6 +161,8 @@ void popBack(struct List* list)
 	{
 		free(list->head);
 		list->size = 0;
+		list->head = NULL;
+		list->tail = NULL;
 		return;
 	}
 
@@ -181,7 +183,7 @@ char peek(struct List const* list)
 	return list->head->value;
 }
 
-char* toString(struct List const* list)
+char const* toString(struct List const* list)
 {
 	if (list->size == 0)
 	{
