@@ -13,11 +13,8 @@ bool isOperation(char const symbol)
 	switch (symbol)
 	{
 	case '+':
-		return true;
 	case '-':
-		return true;
 	case '*':
-		return true;
 	case '/':
 		return true;
 	default:
@@ -42,16 +39,12 @@ int priority(char const operator1, char const operator2)
 
 bool isLeftBracket(char const symbol)
 {
-	char leftBracket = '(';
-
-	return symbol == leftBracket;
+	return symbol == '(';
 }
 
 bool isRightBracket(char const symbol)
 {
-	char rightBracket = ')';
-	
-	return symbol == rightBracket;
+	return symbol == ')';
 }
 
 bool isBracket(char const symbol)
@@ -75,7 +68,7 @@ char* infixToPostfix(char const* string)
 		}
 		else if (isOperation(symbol))
 		{
-			while (size(stack) != 0 && priority(peek(stack), symbol))
+			while (size(stack) != 0 && priority(peek(stack), symbol) == 1)
 			{
 				pushBack(queue, peek(stack));
 				popFront(stack);
@@ -104,6 +97,8 @@ char* infixToPostfix(char const* string)
 
 			if (!isLeftBracket(peek(stack)))
 			{
+				free(stack);
+
 				return "there is bracket withuot pair!";
 			}
 
@@ -118,6 +113,8 @@ char* infixToPostfix(char const* string)
 	{
 		if (isBracket(peek(stack)))
 		{
+			free(stack);
+
 			return "there is bracket withuot pair!";
 		}
 
@@ -125,8 +122,8 @@ char* infixToPostfix(char const* string)
 		popFront(stack);
 	}
 	
-	char* returnSring = toString(queue);
+	char* returnString = toString(queue);
 	free(queue);
 
-	return returnSring;
+	return returnString;
 }

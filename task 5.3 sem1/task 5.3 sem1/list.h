@@ -4,35 +4,35 @@ struct Node;
 
 struct List;
 
-//initializes lists
+// initializes list
 struct List* initializeList();
 
-//initializes node
+// initializes node
 struct Node* initializeNode(char const value, struct Node* next, struct Node* previous);
 
-//add element to the front
+// add element to the front
 void pushFront(struct List* listPointer, char const value);
 
-//add element to the back
+// add element to the back
 void pushBack(struct List* listPointer, char const value);
 
-//add element
+// add element
 void addToList(struct List* listPointer, char const value);
 
-//print list
+// print list
 void printList(struct List const* listPointer);
 
-//delete front element
+// delete front element
 void popFront(struct List* List);
 
-//delete back element
+// delete back element
 void popBack(struct List* List);
 
-//returns peek value
+// returns peek value
 char peek(struct List const* List);
 
-//to string
+// to string
 char const* toString(struct List const* list);
 
-//list size
+// list size
 int size(struct List const* list);
