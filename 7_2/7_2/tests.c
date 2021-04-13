@@ -17,11 +17,12 @@ bool test1()
 	if (calculateTree(tree) != 2)
 	{
 		printf("test1 failed\n");
+		freeTree(tree);
 
 		return false;
 	}
 
-	free(tree);
+	freeTree(tree);
 
 	return true;
 }
@@ -40,11 +41,12 @@ bool test2()
 	if (calculateTree(tree) != 75)
 	{
 		printf("test2 failed\n");
+		freeTree(tree);
 
 		return false;
 	}
 
-	free(tree);
+	freeTree(tree);
 
 	return true;
 }
@@ -63,11 +65,12 @@ bool test3()
 	if (calculateTree(tree) != 37)
 	{
 		printf("test3 failed\n");
+		freeTree(tree);
 
 		return false;
 	}
 
-	free(tree);
+	freeTree(tree);
 
 	return true;
 }

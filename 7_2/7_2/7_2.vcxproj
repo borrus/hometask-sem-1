@@ -148,6 +148,7 @@
     <Text Include="test.txt" />
     <Text Include="test1.txt" />
     <Text Include="test2.txt" />
+    <Text Include="user.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tests.h" />

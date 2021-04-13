@@ -158,3 +158,65 @@ int calculateTree(Tree* tree)
 
 	return calculateSubTree(tree->root);
 }
+
+void freeTreeNode(Node* root)
+{
+	if (root->leftChild == NULL && root->rightChild == NULL)
+	{
+		free(root);
+		root = NULL;
+
+		return;
+	}
+
+	if (root->leftChild != NULL)
+	{
+		freeTreeNode(root->leftChild);
+	}
+
+	if (root->rightChild != NULL)
+	{
+		freeTreeNode(root->rightChild);
+	}
+}
+
+void freeTree(Tree* tree)
+{
+	if (tree->root == NULL)
+	{
+		return;
+	}
+
+	freeTreeNode(tree->root);
+	free(tree);
+	tree = NULL;
+}
+
+void printSubtree(Node* root)
+{
+	if (root->leftChild != NULL)
+	{
+		printf("%c ", root->leftChild->value);
+		printSubtree(root->leftChild);
+	}
+
+	if (root->rightChild != NULL)
+	{
+		printf("%c ", root->rightChild->value);
+		printSubtree(root->rightChild);
+	}
+}
+
+void printTree(Tree* tree)
+{
+	if (tree == NULL)
+	{
+		printf("tree is empty\n");
+
+		return;
+	}
+
+	printf("%c ", tree->root->value);
+
+	printSubtree(tree->root);
+}

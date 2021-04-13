@@ -36,6 +36,9 @@
     <Text Include="test2.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="user.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tree.h">
