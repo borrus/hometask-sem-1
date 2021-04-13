@@ -5,12 +5,7 @@
 
 bool isDigit(char const symbol)
 {
-	if ((int)'0' <= (int)symbol && (int)'9' >= (int)symbol)
-	{
-		return true;
-	}
-
-	return false;
+	return '0' <= symbol && '9' >= symbol;
 }
 
 bool numberLexer(const char* string)

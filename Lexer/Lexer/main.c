@@ -4,21 +4,25 @@
 
 int main()
 {
-	int temp = 0;
-	printf("1 - tests\n");
-	printf("2 - console\n");
-	scanf("%d", &temp);
-
-	if (temp == 1)
+	if (!tests())
 	{
-		tests();
+		printf("tests failed\n");
+
+		return 0;
 	}
 
-	if (temp == 2)
+	printf("tests completed\n\n");
+
+	char temp[100]; 
+	printf("input string:\n");
+	scanf("%s", temp);
+
+	if (numberLexer(temp))
 	{
-		char temp[100];
-		printf("input string\n");
-		scanf("%s", temp);
-		printf("%d", numberLexer(temp));
+		printf("string matches regular expression\n");
+	}
+	else
+	{
+		printf("string doesnt match regular expression\n");
 	}
 }

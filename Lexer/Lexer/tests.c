@@ -3,71 +3,87 @@
 #include <stdbool.h>
 #include "Lexer.h"
 
-void test1()
+bool test1()
 {
 	printf("test1 = ");
+
 	if (numberLexer("54"))
 	{
 		printf("true\n");
-		return;
+
+		return true;
 	}
 
 	printf("false\n");
+
+	return false;
 }
 
-void test2()
+bool test2()
 {
 	printf("test2 = ");
+
 	if (numberLexer("54.34"))
 	{
 		printf("true\n");
-		return;
+
+		return true;
 	}
 
 	printf("false\n");
+
+	return false;
 }
 
-void test3()
+bool test3()
 {
 	printf("test3 = ");
+
 	if (numberLexer("54.34E10"))
 	{
 		printf("true\n");
-		return;
+
+		return true;
 	}
 
 	printf("false\n");
+
+	return false;
 }
 
-void test4()
+bool test4()
 {
 	printf("test4 = ");
+
 	if (numberLexer("54..14"))
 	{
 		printf("false\n");
-		return;
+
+		return false;
 	}
 
 	printf("true\n");
+
+	return true;
 }
 
-void test5()
+bool test5()
 {
 	printf("test5 = ");
+
 	if (numberLexer("e54.14"))
 	{
 		printf("false\n");
-		return;
+
+		return false;
 	}
 
 	printf("true\n");
+
+	return true;
 }
 
-void tests()
+bool tests()
 {
-	test1();
-	test2();
-	test3();
-	test4();
-	test5();
+	return test1() && test2() && test3() && test4() && test5();
 }
