@@ -1,7 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-
 #include "utilities.h"
-
 #include <string.h>
 
 bool firstBiggerThanSecond(char const* str1, char const* str2)
