@@ -3,6 +3,17 @@
 #include <string.h>
 #include <stdbool.h>
 
+typedef enum State
+{
+	start,
+	seenFirstDigit,
+	seenDot,
+	seenDigitAfterDot,
+	seenE,
+	seenOpOrDigit,
+	end
+} State;
+
 bool isDigit(char const symbol)
 {
 	return '0' <= symbol && '9' >= symbol;
@@ -10,7 +21,7 @@ bool isDigit(char const symbol)
 
 bool numberLexer(const char* string)
 {
-	int state = 0;
+	State state = start;
 
 	for (int position = 0; position < strlen(string); ++position)
 	{
@@ -19,9 +30,9 @@ bool numberLexer(const char* string)
 		switch (state)
 		{
 
-		case 0:
+		case start:
 
-			state = 1;
+			state = seenFirstDigit;
 
 			if (!isDigit(symbol))
 			{
@@ -29,17 +40,17 @@ bool numberLexer(const char* string)
 			}
 			break;
 
-		case 1:
+		case seenFirstDigit:
 
 			if (symbol == '.')
 			{
-				state = 2;
+				state = seenDot;
 				break;
 			}
 
 			if (symbol == 'E')
 			{
-				state = 4;
+				state = seenE;
 				break;
 			}
 
@@ -49,20 +60,20 @@ bool numberLexer(const char* string)
 			}
 			break;
 
-		case 2:
+		case seenDot:
 
 			if (!isDigit(symbol))
 			{
 				return false;
 			}
-			state = 3;
+			state = seenDigitAfterDot;
 			break;
 
-		case 3:
+		case seenDigitAfterDot:
 
 			if (symbol == 'E')
 			{
-				state = 4;
+				state = seenE;
 				break;
 			}
 
@@ -72,31 +83,28 @@ bool numberLexer(const char* string)
 			}
 			break;
 
-		case 4:
+		case seenE:
 
-			if (symbol == '+' || symbol == '-')
+			if (symbol == '+' || symbol == '-' || isDigit(symbol))
 			{
-				state = 5;
-				break;
-			}
-
-			if (isDigit(symbol))
-			{
-				state = 5;
+				state = seenOpOrDigit;
 				break;
 			}
 
 			return false;
 
-		case 5:
+		case seenOpOrDigit:
 
 			if (!isDigit(symbol))
 			{
 				return false;
 			}
+
+			state = end;
+
 			break;
 		}
 	}
 
-	return state == 1 || state == 3 || state == 5;
+	return state == seenFirstDigit || state == seenDigitAfterDot || state == end;
 }
