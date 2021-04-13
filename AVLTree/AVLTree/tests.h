@@ -1,4 +1,4 @@
 #pragma once
 
-//running all tests
+// running all tests
 void tests();
