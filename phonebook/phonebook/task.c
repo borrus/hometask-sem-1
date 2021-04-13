@@ -1,6 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+
+bool equalStrings(char const* first, char const* second)
+{
+	if (strlen(first) != strlen(second))
+	{
+		return false;
+	}
+
+	for (int i = 0; i < strlen(first); ++i)
+	{
+		if (first[i] != second[i])
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
 
 void pushDataToFile(char* const path, char* const name, char* const number)
 {
@@ -31,6 +50,8 @@ void printDataFromFile(char* const path)
 		char symbol = fgetc(file);
 		printf("%c", symbol);
 	}
+
+	fclose(file);
 }
 
 char* findNumberByName(char const* name, char* const path)
@@ -44,16 +65,34 @@ char* findNumberByName(char const* name, char* const path)
 
 	while (!feof(file))
 	{
-		char* string = (char*)malloc(sizeof(char));
-		char* number = (char*)malloc(sizeof(char));
+		char* string = (char*)malloc(sizeof(char) * 100);
+		char* number = (char*)malloc(sizeof(char) * 100);
+
+		if (string == NULL)
+		{
+			return NULL;
+		}
+
+		if (number == NULL)
+		{
+			return NULL;
+		}
+
 		fscanf(file, "%s", string);
 
-		if (!strcmp(name, string))
+		if (equalStrings(name, string))
 		{
 			fscanf(file, "%s", number);
+			printf("%s\n", number);
+
 			return number;
 		}
+
+		free(string);
+		free(number);
 	}
+
+	fclose(file);
 }
 
 char* findNameByNumber(char const* number, char* const path)
@@ -65,19 +104,44 @@ char* findNameByNumber(char const* number, char* const path)
 		return;
 	}
 
-	char* currentNumber = (char*)malloc(sizeof(char));
-	char* currentName = (char*)malloc(sizeof(char));
+	char* currentNumber = (char*)malloc(sizeof(char) * 100);
+	char* currentName = (char*)malloc(sizeof(char) * 100);
+
+	if (currentName == NULL)
+	{
+		return NULL;
+	}
+
+	if (currentNumber == NULL)
+	{
+		return NULL;
+	}
 
 	while (!feof(file))
 	{
 		fscanf(file, "%s", currentName);
 		fscanf(file, "%s", currentNumber);
 
-		if (!strcmp(currentNumber, number))
+		if (equalStrings(currentNumber, number))
 		{
-			return currentName;
+			char* name = (char*)malloc(sizeof(char) * 100);
+
+			if (name == NULL)
+			{
+				return NULL;
+			}
+
+			fscanf(file, "%s", name);
+			printf("%s\n", name);
+
+			return name;
 		}
 	}
+
+	free(currentName);
+	free(currentNumber);
+
+	fclose(file);
 }
 
 void saveDataToFile(char* const path, char* const pathToSave)
@@ -104,6 +168,8 @@ void saveDataToFile(char* const path, char* const pathToSave)
 			fprintf(fileToSave, "%c", symbol);
 		}
 	}
+
+	fclose(file);
 }
 
 void output()
