@@ -1,28 +1,21 @@
-#include "file.h"
+#include <stdlib.h>
 #include <stdio.h>
 #include "hashTable.h"
-#include "node.h"
-
-typedef struct aa
-{
-	char* value;
-}aa;
-
-void test1(aa* a)
-{
-	char word[100];
-	word[0] = 'a';
-	word[1] = 'b';
-	word[2] = 'c';
-	word[3] = '\0';
-
-	a->value = copyStr(word);
-}
+#include "file.h"
 
 int main()
 {
+	if (!test())
+	{
+		return 0;
+	}
+
+	printf("test completed\n");
 	Table* table = initTable();
-	readFromFile(table);
+	readFromFile(table, "test1.txt");
 	printTable(table);
 	printFrequencies(table);
+
+	free(table);
+
 }

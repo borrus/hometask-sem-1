@@ -1,3 +1,5 @@
 #pragma once
+#include "hashTable.h"
 
-void readFromFile(struct Table* table);
+// reads from current file
+void readFromFile(Table* table, char const* path);
