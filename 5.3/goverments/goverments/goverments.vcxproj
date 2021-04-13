@@ -141,9 +141,13 @@
   <ItemGroup>
     <ClCompile Include="list.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="task.c" />
+    <ClCompile Include="tests.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="list.h" />
+    <ClInclude Include="task.h" />
+    <ClInclude Include="tests.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="test.txt" />

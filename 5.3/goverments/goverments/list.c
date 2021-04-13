@@ -2,20 +2,59 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+typedef struct Node
+{
+	int value;
+	struct Node* next;
+	struct Node* previous;
+} Node;
+
 Node* initializeNode(int const value)
 {
 	Node* node = (Node*)malloc(sizeof(Node));
+
+	if (node == NULL)
+	{
+		return NULL;
+	}
+
 	node->value = value;
 	node->next = NULL;
 	node->previous = NULL;
+
+	return node;
 }
+
+typedef struct List
+{
+	Node* root;
+	Node* tail;
+	int size;
+} List;
 
 List* initializeList()
 {
-	List* list = (struct List*)malloc(sizeof(List));
-	list->root = NULL;
-	list->tail = NULL;
-	list->size = 0;
+	return calloc(1, sizeof(List));
+}
+
+Node* getListRoot(List* list)
+{
+	return list->root;
+}
+
+Node* getNextNode(Node* node)
+{
+	return node->next;
+}
+
+int getNodeValue(Node* node)
+{
+	return node->value;
+}
+
+int getListSize(List* list)
+{
+	return list->size;
 }
 
 void pushBack(List* list, int const value)
@@ -77,6 +116,7 @@ void popFront(List* list)
 	free(list->root);
 	--list->size;
 	list->root = newRoot;
+	list->root->previous = NULL;
 }
 
 Node* getNodeByValue(List const* list, int const value)
@@ -131,10 +171,10 @@ void deleteNodeByValue(List* list, int const value)
 		return;
 	}
 
-	Node* n1 = toDelete->previous;
-	Node* n2 = toDelete->next;
-	n1->next = n2;
-	n2->previous = n1;
+	Node* nodeTodeletePrevious = toDelete->previous;
+	Node* nodeToDeleteNext = toDelete->next;
+	nodeTodeletePrevious->next = nodeToDeleteNext;
+	nodeToDeleteNext->previous = nodeTodeletePrevious;
 	free(toDelete);
 	--list->size;
 }
